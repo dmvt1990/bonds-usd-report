@@ -77,10 +77,13 @@ def parse_args():
     return p.parse_args()
 
 
-def build_presentation(report_date: date, source: str, output_path: Path, fetch_depth: bool = True) -> Path:
+def build_presentation(report_date, source: str, output_path: Path, fetch_depth: bool = True) -> Path:
     """Основной pipeline сборки валютного отчёта."""
     if not TEMPLATE_PATH.exists():
         raise FileNotFoundError(f"Не найден шаблон: {TEMPLATE_PATH}")
+
+    # Cover gets the full datetime (to show time); data logic uses plain date.
+    date_only = report_date.date() if isinstance(report_date, datetime) else report_date
 
     sections = load_sections()
     sections_by_id = {s.id: s for s in sections}
@@ -121,7 +124,7 @@ def build_presentation(report_date: date, source: str, output_path: Path, fetch_
             currency=sec.currency or "",
             section_title=sec.title,
             call_dates=sec.call_dates(),
-            report_date=report_date,
+            report_date=date_only,
             highlighted=highlighted,
         )
         if sec_id == "bonds_usd":
@@ -135,11 +138,11 @@ def build_presentation(report_date: date, source: str, output_path: Path, fetch_
     # не создаётся.
     if usd_bonds:
         print(f"Rendering yield curve for {len(usd_bonds)} USD bonds")
-        render_yield_curve(prs, usd_bonds, report_date, currency="USD")
+        render_yield_curve(prs, usd_bonds, date_only, currency="USD")
 
     if cny_bonds:
         print(f"Rendering yield curve for {len(cny_bonds)} CNY bonds")
-        render_yield_curve(prs, cny_bonds, report_date, currency="CNY")
+        render_yield_curve(prs, cny_bonds, date_only, currency="CNY")
 
     # --- Глоссарий и дисклеймер — одинаковые с рублёвым отчётом ---
     render_glossary(prs)
