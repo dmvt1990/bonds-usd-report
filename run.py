@@ -45,7 +45,7 @@ def parse_args():
         "--date",
         type=lambda s: datetime.strptime(s, "%Y-%m-%d").date(),
         default=None,
-        help="Дата отчёта в формате YYYY-MM-DD. По умолчанию — предыдущий торговый день.",
+        help="Дата отчёта в формате YYYY-MM-DD. По умолчанию — текущая дата и время.",
     )
     p.add_argument(
         "--source",
@@ -163,7 +163,7 @@ def main():
     args = parse_args()
 
     if args.date is None:
-        args.date = previous_trading_day()
+        args.date = datetime.now()
 
     if args.output is None:
         args.output = OUTPUT_DIR / PPTX_FILENAME
