@@ -18,9 +18,9 @@ from ..constants import (
     TABLE_SLIDE_SOURCE_TOP, TABLE_SLIDE_SOURCE_FONT_SIZE,
     TABLE_SLIDE_FOOTNOTE_TOP, TABLE_SLIDE_FOOTNOTE_FONT_SIZE,
 )
-from ..fonts import set_run_font
-from ..formatting import format_date_dmy
-from ..models import Bond
+from bonds_report_core.fonts import set_run_font
+from bonds_report_core.formatting import format_date_dmy
+from bonds_report_core.models import Bond
 from ..yield_curve import build_yield_curve_chart
 
 

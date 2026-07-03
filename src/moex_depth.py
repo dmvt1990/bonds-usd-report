@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import requests
 
-from .models import Bond
+from bonds_report_core.models import Bond
 
 _ISS_URL = (
     "https://iss.moex.com/iss/engines/stock/markets/bonds/boards/TQCB"

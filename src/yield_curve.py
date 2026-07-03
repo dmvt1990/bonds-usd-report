@@ -23,7 +23,7 @@ matplotlib.use("Agg")  # без дисплея, важно на сервере
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .models import Bond
+from bonds_report_core.models import Bond
 from .ytm import compute_ytm
 
 
